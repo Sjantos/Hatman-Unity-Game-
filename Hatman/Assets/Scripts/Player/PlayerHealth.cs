@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
+	public Canvas GUICanvas;
+	public Image gameOverScreen;
 	public int playerHealth = 100;
 	public Image damageImage;
 	public Slider slider;
@@ -20,6 +22,8 @@ public class PlayerHealth : MonoBehaviour {
 	bool isDead = false;
 	bool damaged = false;
 
+	Animator GUIanim;
+
 	// Use this for initialization
 	void Awake () {
 		currentHealth = playerHealth;
@@ -28,6 +32,8 @@ public class PlayerHealth : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		playerMovement = GetComponent<TP_PlayerMovement> ();
 		playerAttack = GetComponent<TP_PlayerAttack> ();
+
+		GUIanim = GUICanvas.GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -56,5 +62,9 @@ public class PlayerHealth : MonoBehaviour {
 		anim.SetTrigger ("Die");
 		playerAttack.enabled = false;
 		playerMovement.enabled = false;
+		gameOverScreen.transform.SetSiblingIndex (gameOverScreen.transform.GetSiblingIndex() + 1);
+		GUIanim.SetTrigger ("PlayerDied");
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
 	}
 }

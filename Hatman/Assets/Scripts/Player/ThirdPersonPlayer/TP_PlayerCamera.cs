@@ -13,8 +13,6 @@ public class TP_PlayerCamera : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		mainCamera = Camera.main;
-		Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible = false;
 	}
 	
 	// Update is called once per frame
