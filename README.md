@@ -8,8 +8,8 @@ My goal is to be game programmer, but in this project I had chance to try many a
 
 Game is **not finished**, next I'll work on:
 
-- Change camera to be third person
-- Add stamina
+- ~~Change camera to be third person~~
+- ~~Add stamina~~
 - Add pickups such as heal packs or gun upgrades
 - Gun upgrades
 - Different enemy types
