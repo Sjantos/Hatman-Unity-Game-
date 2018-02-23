@@ -65,8 +65,7 @@ public class PlayerAttack : MonoBehaviour {
 		gunLine.SetPosition (0, rifleEndPoint.position);
 		shootRay.origin = (rifleEndPoint.position);
 		Vector3 rayDirection = rifleEndPoint.transform.position - rifle.transform.position;
-		shootRay.direction = rayDirection;//transform.forward;
-		//gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
+		shootRay.direction = rayDirection;
 		if (Physics.Raycast (shootRay, out shootHit, range, shootableMask)) {
 			gunLine.SetPosition (1, shootHit.point);
 			EnemyHealth enemyHealth = shootHit.transform.gameObject.GetComponent<EnemyHealth> ();

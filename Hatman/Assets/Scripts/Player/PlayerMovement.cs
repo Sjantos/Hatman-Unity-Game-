@@ -44,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
 		movement.Set (x, 0f, z);
 		movement = movement.normalized * speed * Time.deltaTime;
 		transform.Translate (movement, Space.World);
-		//playerRigidbody.MovePosition (playerRigidbody.transform.position + movement);
 	}
 
 	void Turn()
@@ -57,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
 			playerDirection.y = 0f;
 			Quaternion newRotation = Quaternion.LookRotation (playerDirection);
 			playerRigidbody.MoveRotation (newRotation);
-			//transform.rotation = newRotation;
 		}
 	}
 

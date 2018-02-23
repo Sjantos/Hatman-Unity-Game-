@@ -15,13 +15,11 @@ public class TP_PlayerMovement : MonoBehaviour {
 	Animator anim;
 	bool isWalking = false;
 	bool isRunning = false;
-	Rigidbody playerRigidbody;
 
 	//Initialization
 	void Awake()
 	{
 		anim = GetComponent<Animator> ();
-		playerRigidbody = GetComponent<Rigidbody> ();
 	}
 
 	// Update is called once per frame
