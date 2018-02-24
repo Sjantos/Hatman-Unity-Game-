@@ -1,71 +1,82 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerMovement : MonoBehaviour 
-{
+public class PlayerMovement : MonoBehaviour {
+
 	public float playerSpeed = 20f;
+	public float staminaLossSpeed = 5f;
+	public float staminaRegenerationSpeed = 5f;
+	public Slider staminaSlider;
 
 	float speed = 20f;
 	Vector3 movement;
 	Animator anim;
 	bool isWalking = false;
 	bool isRunning = false;
-	Rigidbody playerRigidbody;
-	int floorMask;
-	float cameraRayLength = 1000f;
 
 	//Initialization
 	void Awake()
 	{
-		floorMask = LayerMask.GetMask ("Floor");
 		anim = GetComponent<Animator> ();
-		playerRigidbody = GetComponent<Rigidbody> ();
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		//Get inputs (x and z as unity axes)
 		float x = Input.GetAxis ("Horizontal");
 		float z = Input.GetAxis ("Vertical");
 
-		
-		isRunning = Input.GetAxisRaw ("Run") > 0 ? true : false;
-		
-		Move (x, z);
-		Turn ();
-		Anim (x, z);
+		//Update stamina slider and (value)
+		float stamina = staminaSlider.value;
+		if (isRunning) {
+			stamina -= staminaLossSpeed * Time.deltaTime;
+			stamina = Mathf.Clamp (stamina, staminaSlider.minValue, staminaSlider.maxValue);
+		} else {
+			stamina += staminaRegenerationSpeed * Time.deltaTime;
+			stamina = Mathf.Clamp (stamina, staminaSlider.minValue, staminaSlider.maxValue);
+		}
+		staminaSlider.value = stamina;
 
-		//transform.Translate(new Vector3(horizontalMove, 0, verticalMove));
+		//Check if player hold left shift
+		isRunning = Input.GetAxisRaw ("Run") > 0 ? true : false;
+		//If stamina is 0, player can't run
+		if (stamina <= 0)
+			CancelRun ();
+
+		//Move Player, PlayerCamera manages rotations
+		Move (x, z); 
+		//Animate character
+		Anim (x, z);
 	}
 
+	/// <summary>
+	/// Move the player
+	/// </summary>
+	/// <param name="x">Input value for x axis</param>
+	/// <param name="z">Input value for z axis</param>
 	void Move(float x, float z)
 	{
 		movement.Set (x, 0f, z);
+		//Make sure that moving diagonally is the same speed as along axes (normalize)
 		movement = movement.normalized * speed * Time.deltaTime;
-		transform.Translate (movement, Space.World);
+		transform.Translate (movement);
 	}
 
-	void Turn()
-	{
-		//Ray from camera to mouse on floor layer, player will face this point
-		Ray cameraRay = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit floorHit;
-		if (Physics.Raycast (cameraRay, out floorHit, cameraRayLength, floorMask)) {
-			Vector3 playerDirection = floorHit.point - transform.position;
-			playerDirection.y = 0f;
-			Quaternion newRotation = Quaternion.LookRotation (playerDirection);
-			playerRigidbody.MoveRotation (newRotation);
-		}
-	}
-
+	/// <summary>
+	/// Animation of character
+	/// </summary>
+	/// <param name="x">Input value for x axis</param>
+	/// <param name="z">Input value for z axis</param>
 	void Anim(float x, float z)
 	{
 		if (isRunning)
 			speed = 3 * playerSpeed;
 		else
 			speed = playerSpeed;
-		
+
+		//Set walking animation, based on input values for movement
 		if (x != 0f || z != 0f)
 			isWalking = true;
 		else
@@ -79,6 +90,9 @@ public class PlayerMovement : MonoBehaviour
 		anim.SetBool ("IsRunning", isRunning);
 	}
 
+	/// <summary>
+	/// Aborts player run
+	/// </summary>
 	public void CancelRun()
 	{
 		isRunning = false;

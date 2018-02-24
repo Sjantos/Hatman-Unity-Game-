@@ -260,9 +260,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4527378100949334}
+  - component: {fileID: 136515196709763674}
   m_Layer: 9
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: EnemyHead
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -825,8 +826,21 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.5
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Radius: 1
+  m_Center: {x: 0, y: 3, z: 1}
+--- !u!136 &136515196709763674
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1636731831445522}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 0.8
+  m_Direction: 0
+  m_Center: {x: -0.3, y: 0, z: -0.1}
 --- !u!136 &136965688918611466
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -837,9 +851,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1
-  m_Height: 6
+  m_Height: 5
   m_Direction: 1
-  m_Center: {x: 0, y: 3, z: 0}
+  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!137 &137681470517902200
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

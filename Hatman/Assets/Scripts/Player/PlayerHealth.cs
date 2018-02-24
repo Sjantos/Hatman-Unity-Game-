@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
 
 	public Canvas GUICanvas;
-	public Image gameOverScreen;
 	public int playerHealth = 100;
 	public Image damageImage;
 	public Slider slider;
@@ -16,13 +15,10 @@ public class PlayerHealth : MonoBehaviour {
 	int currentHealth;
 	public int CurrentHealth {get{ return currentHealth; }}
 	Animator anim;
-	//Delete TP_ if want to use old version (orthogonal)
-	TP_PlayerMovement playerMovement;
-	TP_PlayerAttack playerAttack;
+	PlayerMovement playerMovement;
+	PlayerAttack playerAttack;
 	bool isDead = false;
 	bool damaged = false;
-
-	Animator GUIanim;
 
 	// Use this for initialization
 	void Awake () {
@@ -30,10 +26,8 @@ public class PlayerHealth : MonoBehaviour {
 		slider.maxValue = currentHealth;
 		slider.value = currentHealth;
 		anim = GetComponent<Animator> ();
-		playerMovement = GetComponent<TP_PlayerMovement> ();
-		playerAttack = GetComponent<TP_PlayerAttack> ();
-
-		GUIanim = GUICanvas.GetComponent<Animator> ();
+		playerMovement = GetComponent<PlayerMovement> ();
+		playerAttack = GetComponent<PlayerAttack> ();
 	}
 	
 	// Update is called once per frame
@@ -46,25 +40,32 @@ public class PlayerHealth : MonoBehaviour {
 		damaged = false;
 	}
 
+	/// <summary>
+	/// Decrease health
+	/// </summary>
+	/// <param name="damage">Ammount of health to subtract</param>
 	public void TakeDamage(int damage)
 	{
 		damaged = true;
 		currentHealth -= damage;
 		slider.value = currentHealth;
+		//Check if player died
 		if (currentHealth <= 0 && !isDead)
 			Death();
 	}
 
+	/// <summary>
+	/// Manages all action after player health reach 0
+	/// </summary>
 	void Death()
 	{
 		isDead = true;
 		playerAttack.DisableEffects ();
 		anim.SetTrigger ("Die");
+		//Dead player can;t attack or move
 		playerAttack.enabled = false;
 		playerMovement.enabled = false;
-		gameOverScreen.transform.SetSiblingIndex (gameOverScreen.transform.GetSiblingIndex() + 1);
-		GUIanim.SetTrigger ("PlayerDied");
-		Cursor.lockState = CursorLockMode.None;
-		Cursor.visible = true;
+		//Show GameOver screen
+		GUICanvas.GetComponent<GameOverScreen> ().ShowGameOverScreen ();
 	}
 }

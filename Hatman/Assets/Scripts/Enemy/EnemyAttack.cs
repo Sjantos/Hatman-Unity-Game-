@@ -12,7 +12,7 @@ public class EnemyAttack : MonoBehaviour {
 	PlayerHealth playerHealthScript;
 	EnemyHealth enemyHealthScript;
 	bool playerInRange;
-	float timer;
+	float timer;						//Used to control enemy attack speed
 
 	// Use this for initialization
 	void Awake () {
@@ -21,33 +21,49 @@ public class EnemyAttack : MonoBehaviour {
 		playerHealthScript = player.GetComponent<PlayerHealth> ();
 		enemyHealthScript = GetComponent <EnemyHealth> ();
 	}
-
+		
+	/// <summary>
+	/// Executes when something is in Trigger Collider (sphere colliders in Hatman)
+	/// </summary>
+	/// <param name="other">Thing that entered trigger</param>
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.CompareTag("Player"))//gameObject == player)
+		//If this thing was the player, enemy can attack
+		if (other.CompareTag("Player"))
 			playerInRange = true;
 
+		//If want to attack player, stop walking
 		if (playerInRange)
 			anim.SetBool ("IsWalking", false);		
 	}
-
+		
+	/// <summary>
+	/// Executes when something leaves Trigger Collider (sphere colliders in Hatman) 
+	/// </summary>
+	/// <param name="other">Thing that leaved trigger</param>
 	void OnTriggerExit(Collider other)
 	{
-		if (other.CompareTag("Player"))//gameObject == player)
+		//If this thing was the player, enemy ca't attacko anymore
+		if (other.CompareTag("Player"))
 			playerInRange = false;
 
+		//Enable walking animation (must catch player)
 		if(!playerInRange)
 			anim.SetBool("IsWalking", true);		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		//Control time between attacks
 		timer += Time.deltaTime;
+		//disable attack animation (have exit time in animator, won't stop immediately)
 		anim.SetBool ("IsAttacking", false);
+		//If player in range AND attack interval reached AND enemy is alive => attack player
 		if (playerInRange && timer >= timeBetweenAttacks && enemyHealthScript.CurrentHealth > 0) {
 			Attack ();
 		}
-			
+
+		//If player is dead, disable enemy Moves, Attacks
 		if (playerHealthScript.CurrentHealth <= 0) {
 			GetComponent<EnemyFollowPlayer> ().enabled = false;
 			anim.SetBool ("IsWalking", false);
@@ -55,14 +71,19 @@ public class EnemyAttack : MonoBehaviour {
 		}
 
 	}
-
+		
+	/// <summary>
+	/// Attack player
+	/// </summary>
 	void Attack()
 	{
 		anim.SetBool ("IsAttacking", true);
 		timer = 0f;
 	}
-
-	//Event use in attack animation
+		
+	/// <summary>
+	/// Event used in attack animation, to hurt player in proper moment
+	/// </summary>
 	void HurtPlayer()
 	{
 		if(playerHealthScript.CurrentHealth > 0)

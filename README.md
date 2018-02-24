@@ -15,7 +15,9 @@ Game is **not finished**, next I'll work on:
 - Different enemy types
 - Minimap
 - ~~Start menu and game over screen~~
-- Headshots
-- Adjust in skeleton attack trigger (now they can attack when player is behind them)
+- ~~Headshots~~
+- ~~Adjust in skeleton attack trigger (now they can attack when player is behind them)~~
 - Adjust player and enemy speed, spawn rate
 - Implement some difficulty levels
+- ~~Add floating gunpoint~~
+- ~~Enemies get stuck in obstacles~~

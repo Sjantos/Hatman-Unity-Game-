@@ -13,15 +13,21 @@ public class EnemySpawnManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		playerHealth = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerHealth> ();
+		//Start spawning enemies, repeat after every spawnInterval
 		InvokeRepeating ("Spawn", spawnInterval, spawnInterval);
 	}
-	
+
+	/// <summary>
+	/// Spawn enemy in random spot from spawnTable field
+	/// </summary>
 	void Spawn()
 	{
+		//only when player is alive
 		if (playerHealth.CurrentHealth <= 0) {
 			return;
 		}
 
+		//Pick randomly from spawners where new enemy should appear
 		int spawner = Random.Range (0, spawnTable.Length);
 		Instantiate (enemy, spawnTable [spawner].position, spawnTable [spawner].rotation);
 	}
