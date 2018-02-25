@@ -7,7 +7,9 @@ I made everything by myself, 3D models, animations, level design, scripts.
 My goal is to be game programmer, but in this project I had chance to try many aspects of game dev.
 
 Game is **not finished**, I work on more features.
+
 Hatman's **ToDo** list:
+
 ~~Scratched things are ready~~
 
 - ~~Change camera to be third person~~
