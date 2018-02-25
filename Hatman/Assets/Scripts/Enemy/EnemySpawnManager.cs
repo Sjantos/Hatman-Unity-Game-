@@ -11,7 +11,7 @@ public class EnemySpawnManager : MonoBehaviour {
 	PlayerHealth playerHealth;
 
 	// Use this for initialization
-	void Start () {
+	void OnEnable () {
 		playerHealth = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerHealth> ();
 		//Start spawning enemies, repeat after every spawnInterval
 		InvokeRepeating ("Spawn", spawnInterval, spawnInterval);

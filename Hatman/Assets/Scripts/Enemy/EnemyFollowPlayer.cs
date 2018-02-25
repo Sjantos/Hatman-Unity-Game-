@@ -11,7 +11,7 @@ public class EnemyFollowPlayer : MonoBehaviour {
 	PlayerHealth playerHealth;
 
 	// Use this for initialization
-	void Awake () {
+	void OnEnable () {
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		nav = GetComponent<NavMeshAgent> ();
 		anim = GetComponent<Animator> ();

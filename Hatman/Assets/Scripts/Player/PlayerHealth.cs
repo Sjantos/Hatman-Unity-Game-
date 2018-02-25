@@ -66,6 +66,7 @@ public class PlayerHealth : MonoBehaviour {
 		playerAttack.enabled = false;
 		playerMovement.enabled = false;
 		//Show GameOver screen
-		GUICanvas.GetComponent<GameOverScreen> ().ShowGameOverScreen ();
+		//GUICanvas.GetComponent<GameOverScreen> ().ShowGameOverScreen ();
+		Messenger.Broadcast(GameEvent.GameOver);
 	}
 }

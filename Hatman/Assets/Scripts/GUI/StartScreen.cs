@@ -17,7 +17,7 @@ public class StartScreen : MonoBehaviour {
 			item.SetActive (false);
 		}
 		anim = GetComponent<Animator> ();
-		playButton.onClick.AddListener (PlayClick);
+		//playButton.onClick.AddListener (PlayClick);
 	}
 
 	/// <summary>
