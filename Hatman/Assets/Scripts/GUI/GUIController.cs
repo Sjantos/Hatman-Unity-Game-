@@ -9,6 +9,7 @@ public class GUIController : MonoBehaviour {
 
 	[SerializeField] private GameObject startScreen;
 	[SerializeField] private GameObject gameOverScreen;
+	[SerializeField] private GameObject interactionAnswer;
 
 	List<GameObject> objects;
 	Animator anim;
@@ -23,11 +24,13 @@ public class GUIController : MonoBehaviour {
 		objects.RemoveAll (x => x.name == "EventSystem");
 
 		Messenger.AddListener (GameEvent.GameOver, GameOver);
+		Messenger.AddListener (GameEvent.GunpointOffTrigger, GunpointOffTrigger);
 	}
 
 	void OnDestroy()
 	{
 		Messenger.RemoveListener (GameEvent.GameOver, GameOver);
+		Messenger.RemoveListener (GameEvent.GunpointOffTrigger, GunpointOffTrigger);
 	}
 
 	void Start()
@@ -77,5 +80,10 @@ public class GUIController : MonoBehaviour {
 	{
 		anim.SetTrigger ("Exit");
 		Application.Quit ();
+	}
+
+	public void GunpointOffTrigger()
+	{
+		interactionAnswer.gameObject.SetActive (false);
 	}
 }

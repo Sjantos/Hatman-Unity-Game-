@@ -60,7 +60,7 @@ public class EnemyHealth : MonoBehaviour {
 
 		//Deactivate collider, so player can shoot over dead enemy, and dead enemy can't attack
 		capsuleCollider.enabled = false;
-		GetComponent<SphereCollider> ().enabled = false;
+		GetComponentInChildren<SphereCollider> ().enabled = false;
 		anim.SetTrigger ("Die");
 	}
 		

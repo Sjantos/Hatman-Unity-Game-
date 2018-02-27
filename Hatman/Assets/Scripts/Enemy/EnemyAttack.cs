@@ -16,10 +16,10 @@ public class EnemyAttack : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		anim = GetComponent<Animator> ();
+		anim = GetComponentInParent<Animator> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerHealthScript = player.GetComponent<PlayerHealth> ();
-		enemyHealthScript = GetComponent <EnemyHealth> ();
+		enemyHealthScript = GetComponentInParent <EnemyHealth> ();
 	}
 		
 	/// <summary>
@@ -65,7 +65,7 @@ public class EnemyAttack : MonoBehaviour {
 
 		//If player is dead, disable enemy Moves, Attacks
 		if (playerHealthScript.CurrentHealth <= 0) {
-			GetComponent<EnemyFollowPlayer> ().enabled = false;
+			GetComponentInParent<EnemyFollowPlayer> ().enabled = false;
 			anim.SetBool ("IsWalking", false);
 			enabled = false;
 		}
