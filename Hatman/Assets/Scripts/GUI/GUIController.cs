@@ -25,6 +25,12 @@ public class GUIController : MonoBehaviour {
 
 		Messenger.AddListener (GameEvent.GameOver, GameOver);
 		Messenger.AddListener (GameEvent.GunpointOffTrigger, GunpointOffTrigger);
+
+		foreach (var item in objects) {
+			item.SetActive (false);
+		}
+
+		gameOverScreen.SetActive (false);
 	}
 
 	void OnDestroy()
@@ -35,11 +41,11 @@ public class GUIController : MonoBehaviour {
 
 	void Start()
 	{
-		foreach (var item in objects) {
-			item.SetActive (false);
-		}
-
-		gameOverScreen.SetActive (false);
+//		foreach (var item in objects) {
+//			item.SetActive (false);
+//		}
+//
+//		gameOverScreen.SetActive (false);
 	}
 
 	void GameOver()
